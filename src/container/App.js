@@ -46,6 +46,7 @@ class App extends Component {
           <ErrorBoundry>
           <Searchbox searchfunction={onsearchfunction}/>
           </ErrorBoundry>
+          <h1>LOADING...</h1>
         </div>
             
     ) :
