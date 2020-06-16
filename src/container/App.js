@@ -3,41 +3,48 @@ import Searchbox from '../components/Searchbox';
 import Robocardlist from '../components/Robocardlist';
 import Scroll from '../components/Scroll';
 import ErrorBoundry from '../components/ErrorBoundry';
+import { connect } from 'react-redux';
 import './App.css';
 import 'tachyons';
+import { setSearchField, requestRobots } from '../actions';
+
+const mapStatetoProps = (state) => {
+ return { 
+   searchval: state.searchRobots.searchval ,
+   robots: state.requestRobots.robots,
+   isPending: state.requestRobots.isPending,
+   error: state.requestRobots.error
+
+  } 
+}
+
+const mapDispatchtoProps = (dispatch) => {
+ return {
+  onsearchfunction: (event) => dispatch(setSearchField(event.target.value)),
+  onfetchrobots: () => dispatch(requestRobots())
+ }
+}
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      searchval: '',
-      robots: []
-    }
-  }
-
+    
   componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-    .then(response => {return response.json();})
-    .then(users => { this.setState({robots: users})})
+    this.props.onfetchrobots();
   }
 
-  onsearchfunction = (event) => {    
-    this.setState({ searchval: event.target.value });
-
-       }
+ 
 
   render() {
-    const { robots, searchval } = this.state;
+    const { searchval, onsearchfunction, robots, isPending } = this.props;
     const filteredrobots = robots.filter( robot => {
       return robot.name.toLowerCase().includes(searchval.toLowerCase());
        });
 
-    return robots.length === 0 ?  (
+    return isPending === true ?  (
 
          <div className="tc">
           <h1>RoboFriends</h1>
           <ErrorBoundry>
-          <Searchbox searchfunction={this.onsearchfunction}/>
+          <Searchbox searchfunction={onsearchfunction}/>
           </ErrorBoundry>
         </div>
             
@@ -46,7 +53,7 @@ class App extends Component {
       
           <div className="tc">
           <h1>RoboFriends</h1>
-          <Searchbox searchfunction={this.onsearchfunction}/>
+          <Searchbox searchfunction={onsearchfunction}/>
            <Scroll>
              <ErrorBoundry>
               <Robocardlist robots={filteredrobots}/>
@@ -60,4 +67,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(mapStatetoProps, mapDispatchtoProps)(App);
