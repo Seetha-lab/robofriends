@@ -45,9 +45,9 @@ class App extends Component {
           <h1>RoboFriends</h1>
           <ErrorBoundry>
           <Searchbox searchfunction={onsearchfunction}/>
-          </ErrorBoundry>
           <h1>LOADING...</h1>
-        </div>
+          </ErrorBoundry>
+         </div>
             
     ) :
         (
