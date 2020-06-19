@@ -44,7 +44,7 @@ class App extends Component {
            <h1>RoboFriends</h1>
            <Searchbox searchfunction={onsearchfunction}/>
           <Scroll>
-            { isPending ? <h1>Loading ...</h1> :
+            { isPending ? <h1> Loading ... </h1> :
               <ErrorBoundry>
                  <Robocardlist robots={filteredrobots}/>
               </ErrorBoundry>
