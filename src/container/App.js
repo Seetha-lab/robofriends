@@ -39,33 +39,20 @@ class App extends Component {
       return robot.name.toLowerCase().includes(searchval.toLowerCase());
        });
 
-    return isPending === true ?  (
-
-         <div className="tc">
-          <h1>RoboFriends</h1>
-          <ErrorBoundry>
+       return (
+        <div className='tc'>
           <Searchbox searchfunction={onsearchfunction}/>
-          <h1>LOADING...</h1>
-          </ErrorBoundry>
-         </div>
-            
-    ) :
-        (
-      
-          <div className="tc">
-          <h1>RoboFriends</h1>
-          <Searchbox searchfunction={onsearchfunction}/>
-           <Scroll>
-             <ErrorBoundry>
-              <Robocardlist robots={filteredrobots}/>
-            </ErrorBoundry>
+          <Scroll>
+            { isPending ? <h1>Loading</h1> :
+              <ErrorBoundry>
+                <Robocardlist robots={filteredrobots}/>
+              </ErrorBoundry>
+            }
           </Scroll>
-          </div>
-          
-     
-        )
+        </div>
+      );
 
-  }
+    }
 }
 
 export default connect(mapStatetoProps, mapDispatchtoProps)(App);
