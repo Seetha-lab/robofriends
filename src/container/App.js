@@ -41,16 +41,17 @@ class App extends Component {
 
        return (
         <div className='tc'>
-          <Searchbox searchfunction={onsearchfunction}/>
+           <h1>RoboFriends</h1>
+           <Searchbox searchfunction={onsearchfunction}/>
           <Scroll>
-            { isPending ? <h1>Loading</h1> :
+            { isPending ? <h1>Loading ...</h1> :
               <ErrorBoundry>
-                <Robocardlist robots={filteredrobots}/>
+                 <Robocardlist robots={filteredrobots}/>
               </ErrorBoundry>
             }
           </Scroll>
         </div>
-      );
+      ); 
 
     }
 }
